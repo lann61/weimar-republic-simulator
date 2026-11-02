@@ -1,0 +1,93 @@
+export const VAR_LABELS: Record<string, string> = {
+  'economy.output': '工业生产',
+  'economy.gdp': 'GDP',
+  'economy.unemployment': '失业率',
+  'economy.inflation': '通胀率',
+  'economy.priceLevel': '物价水平',
+  'economy.realWages': '实际工资',
+  'economy.taxRevenue': '税收',
+  'economy.spending': '财政支出',
+  'economy.deficit': '财政赤字',
+  'economy.debt': '公共债务',
+  'economy.foreignCapital': '外资依赖',
+  'economy.bankLiquidity': '银行流动性',
+  'economy.creditSupply': '信贷供给',
+  'economy.businessFailures': '企业破产',
+  'economy.agriculturalDebt': '农业债务',
+  'economy.foodPrices': '食品价格',
+  'economy.savingsValue': '储蓄购买力',
+  'economy.investment': '投资',
+  'economy.consumption': '消费',
+  'economy.exports': '出口',
+  'economy.imports': '进口',
+  'economy.capitalInflow': '资本流入',
+  'economy.moneySupply': '货币供应',
+  'economy.reparationsPaid': '赔款支付',
+  'society.satisfaction': '社会满意度',
+  'society.trust': '政府信任',
+  'society.republicSupport': '共和国认同',
+  'society.polarization': '社会极化',
+  'society.violence': '政治暴力',
+  'society.strikes': '罢工频率',
+  'society.mediaFreedom': '新闻自由',
+  'society.inequality': '收入不平等',
+  'society.housing': '住房保障',
+  'society.socialTrust': '社会信任',
+  'society.optimism': '未来乐观度',
+  'society.youthUnemployment': '青年失业',
+  'society.antisemitism': '排外与反犹传播',
+  'society.poverty': '贫困率',
+  'society.protests': '抗议频率',
+  'society.politicalMurders': '政治谋杀风险',
+  'society.womenParticipation': '女性社会参与',
+  'society.culturalFreedom': '文化自由',
+  'institutions.constitutionalCommitment': '宪法认同度',
+  'institutions.parliamentAuthority': '议会权威',
+  'institutions.presidentialPowerUse': '总统权力使用',
+  'institutions.emergencyDependence': '紧急法令依赖度',
+  'institutions.governmentLegitimacy': '政府合法性',
+  'institutions.judicialIndependence': '司法独立',
+  'institutions.policeNeutrality': '警察中立性',
+  'institutions.militarySubordination': '军队服从文官',
+  'institutions.federalCohesion': '联邦凝聚力',
+  'institutions.partyCompromise': '政党妥协能力',
+  'institutions.governmentDurability': '政府持续性',
+  'institutions.democraticResilience': '民主韧性',
+  'diplomacy.reparationsPressure': '赔款压力',
+  'diplomacy.foreignLoans': '外国贷款',
+  'diplomacy.capitalConfidence': '国际资本信心',
+  'diplomacy.treatyConstraint': '条约约束',
+  'diplomacy.isolation': '外交孤立',
+  'diplomacy.prestige': '外交信誉',
+  'diplomacy.relationFrance': '对法关系',
+  'diplomacy.relationBritain': '对英关系',
+  'diplomacy.relationUSA': '对美关系',
+  'diplomacy.relationUSSR': '对苏关系',
+  'diplomacy.relationPoland': '对波关系',
+  'diplomacy.borderPressure': '边境压力',
+  'diplomacy.disarmamentConstraint': '裁军约束',
+  'diplomacy.leagueParticipation': '国联参与',
+};
+
+export const VAR_GROUPS: { title: string; prefix: string; keys: string[] }[] = [
+  {
+    title: '经济与财政',
+    prefix: 'economy',
+    keys: ['output', 'gdp', 'unemployment', 'inflation', 'priceLevel', 'realWages', 'taxRevenue', 'spending', 'deficit', 'debt'],
+  },
+  { title: '金融与外部', prefix: 'economy', keys: ['bankLiquidity', 'creditSupply', 'foreignCapital', 'capitalInflow', 'moneySupply', 'businessFailures', 'savingsValue'] },
+  { title: '社会结构', prefix: 'society', keys: ['satisfaction', 'trust', 'republicSupport', 'polarization', 'violence', 'strikes', 'mediaFreedom', 'inequality', 'housing', 'poverty'] },
+  { title: '制度', prefix: 'institutions', keys: ['constitutionalCommitment', 'parliamentAuthority', 'presidentialPowerUse', 'emergencyDependence', 'governmentLegitimacy', 'judicialIndependence', 'policeNeutrality', 'militarySubordination', 'federalCohesion', 'partyCompromise', 'governmentDurability', 'democraticResilience'] },
+  { title: '外交', prefix: 'diplomacy', keys: ['reparationsPressure', 'capitalConfidence', 'isolation', 'prestige', 'relationFrance', 'relationBritain', 'relationUSA', 'relationUSSR', 'relationPoland'] },
+];
+
+export function labelFor(path: string): string {
+  return VAR_LABELS[path] ?? path;
+}
+
+/** 变化方向与好坏分开；中性变量不暗示固定价值判断。 */
+export function deltaTone(path: string, delta: number): string {
+  const lowerBetter = /unemployment|inflation|violence|polarization|poverty|debt|deficit|isolation|emergencyDependence|presidentialPowerUse|antisemitism|politicalMurders|businessFailures/.test(path);
+  const neutral = /moneySupply|priceLevel|spending|taxRevenue|foreignCapital|imports/.test(path);
+  return neutral ? 'var(--smoke)' : (lowerBetter ? delta < 0 : delta > 0) ? 'var(--good)' : 'var(--bad)';
+}

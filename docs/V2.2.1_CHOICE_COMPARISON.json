@@ -1,0 +1,27 @@
+{
+  "seed": 42,
+  "changedDecisionOnly": "ev_locarno",
+  "months": 12,
+  "results": [
+    {
+      "choice": "sign_locarno",
+      "date": "1926-10-01",
+      "output": 73.03866150045253,
+      "unemployment": 11.304756305940073,
+      "relationFrance": -34.48761326108728,
+      "capitalConfidence": 41.17925598494796,
+      "violence": 57.74877766841957,
+      "satisfaction": 50.74952413450067
+    },
+    {
+      "choice": "refuse_locarno",
+      "date": "1926-10-01",
+      "output": 70.85917808932554,
+      "unemployment": 12.174748141200592,
+      "relationFrance": -45.105173583980445,
+      "capitalConfidence": 36.00543381998112,
+      "violence": 58.00149017294774,
+      "satisfaction": 50.253652013187995
+    }
+  ]
+}
