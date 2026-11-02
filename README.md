@@ -12,6 +12,30 @@
 
 当前玩家反馈修正见 [V2.2.1_PLAYER_FEEDBACK](docs/V2.2.1_PLAYER_FEEDBACK.md)：当前政府事件、选举组阁和持续政策传导。
 
+## 界面预览
+
+以下为游戏实际界面截图（V2.2.1）。
+
+| 标题页 | 模式与起始局势 |
+|:--:|:--:|
+| ![标题页](docs/screenshots/01-title.png) | ![模式与起始局势](docs/screenshots/02-scenarios.png) |
+
+| 事件决策：基尔水兵起义 | 政府与政党 |
+|:--:|:--:|
+| ![事件决策：基尔水兵起义](docs/screenshots/03-event-kiel-mutiny.png) | ![政府与政党](docs/screenshots/04-government-1919.png) |
+
+| 政党与人物 | 政府与议会 |
+|:--:|:--:|
+| ![政党与人物](docs/screenshots/05-parties-people.png) | ![政府与议会](docs/screenshots/06-government-parliament.png) |
+
+| 经济与财政 | 选民群体与党派亲和 |
+|:--:|:--:|
+| ![经济与财政](docs/screenshots/07-economy.png) | ![选民群体与党派亲和](docs/screenshots/08-voter-groups.png) |
+
+| 选区政治地理 | |
+|:--:|:--:|
+| ![选区政治地理](docs/screenshots/09-electoral-map.png) | |
+
 ## V2.2 更新
 
 完整修改说明见 [V2.2_CHANGELOG](docs/V2.2_CHANGELOG.md)，分支覆盖见 [V2.2_BRANCH_AUDIT](docs/V2.2_BRANCH_AUDIT.json)。新增持续决策后果、结果驱动事件链、统一法令与政党状态、JSON 导入，以及窄屏布局。
