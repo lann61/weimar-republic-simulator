@@ -156,3 +156,5 @@ Konrad-Adenauer-Stiftung 与德国议会人物数据库等公开来源，逐条�
 并在数据字段 `source_ids` 与界面中标注。本项目不复制上述来源的受版权保护文本或图像。
 
 © Eumenes — Weimar Republic: The Fall of Democracy.
+
+完整的创作与知识产权声明见 [创作声明与知识产权声明](docs/CREATOR_STATEMENT.md)。
