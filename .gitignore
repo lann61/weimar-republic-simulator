@@ -1,0 +1,12 @@
+node_modules/
+dist/
+shots/
+.vite-test-cache/
+*.log
+.openai/
+.site-publish-*/
+*.tsbuildinfo
+.DS_Store
+.env
+.env.*
+!.env.example
