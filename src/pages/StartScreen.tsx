@@ -59,6 +59,21 @@ export function StartScreen() {
           </div>
         </div>
 
+        <button
+          className="btn sm"
+          style={{ marginTop: 30 }}
+          onClick={() => {
+            try {
+              localStorage.removeItem('weimar_prologue_seen');
+            } catch {
+              /* ignore */
+            }
+            window.dispatchEvent(new Event('weimar:show-prologue'));
+          }}
+        >
+          ↺ 回到序章（历史重新）
+        </button>
+
         <div className="srcline" style={{ marginTop: 44, maxWidth: 520, lineHeight: 1.8 }}>
           © Eumenes. Weimar Republic — The Fall of Democracy.
           <br />

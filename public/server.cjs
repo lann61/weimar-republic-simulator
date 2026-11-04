@@ -22,6 +22,7 @@ const MIME = {
   '.webp': 'image/webp',
   '.woff2': 'font/woff2',
   '.ico': 'image/x-icon',
+  '.mp3': 'audio/mpeg',
 };
 const gzipCache = new Map();
 
@@ -33,9 +34,48 @@ function gzipFor(file, data) {
   return gz;
 }
 
+/* 访问计数：持久化到站点根目录的 visits.json（无需外部服务与依赖） */
+const VISIT_FILE = path.join(root, 'visits.json');
+
+function readVisitCount() {
+  try {
+    const raw = JSON.parse(fs.readFileSync(VISIT_FILE, 'utf8'));
+    const n = Number(raw && raw.count);
+    return Number.isFinite(n) && n >= 0 ? n : 0;
+  } catch {
+    return 0;
+  }
+}
+
+function incrementVisitCount() {
+  const next = readVisitCount() + 1;
+  try {
+    fs.writeFileSync(
+      VISIT_FILE,
+      JSON.stringify({ count: next, updatedAt: new Date().toISOString() })
+    );
+  } catch {
+    /* 只读文件系统时降级为内存计数，不阻断服务 */
+  }
+  return next;
+}
+
 const server = http.createServer((req, res) => {
   let urlPath = decodeURIComponent((req.url || '/').split('?')[0]);
   if (urlPath === '/' || urlPath === '') urlPath = '/index.html';
+
+  if (urlPath === '/api/visit' || urlPath === '/api/visits') {
+    const count = urlPath === '/api/visit' ? incrementVisitCount() : readVisitCount();
+    const body = JSON.stringify({ count });
+    res.writeHead(200, {
+      'Content-Type': 'application/json; charset=utf-8',
+      'Content-Length': Buffer.byteLength(body),
+      'Cache-Control': 'no-store',
+    });
+    res.end(body);
+    return;
+  }
+
   const file = path.normalize(path.join(root, urlPath));
 
   if (!file.startsWith(root)) {

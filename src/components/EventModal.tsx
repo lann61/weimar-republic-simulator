@@ -1,4 +1,6 @@
+import { useEffect, useRef } from 'react';
 import { useGame } from '../store/useGame';
+import { playPageTurn } from '../utils/sfx';
 import { eventMap } from '../data/events';
 import { personMap } from '../data/people';
 import { formatDateFull } from '../simulation/engine/date';
@@ -21,6 +23,16 @@ const CATEGORY_LABELS: Record<string, string> = {
 
 export function EventModal() {
   const { state, resolve, skip } = useGame();
+  const pendingId = state?.pendingEvent?.eventId ?? null;
+  const lastPlayed = useRef<string | null>(null);
+
+  useEffect(() => {
+    if (pendingId && lastPlayed.current !== pendingId) {
+      lastPlayed.current = pendingId;
+      playPageTurn();
+    }
+  }, [pendingId]);
+
   if (!state || !state.pendingEvent) return null;
   const event = eventMap.get(state.pendingEvent.eventId);
   if (!event) return null;

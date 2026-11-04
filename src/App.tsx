@@ -1,10 +1,11 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useGame } from './store/useGame';
 import { TopBar } from './components/TopBar';
 import { SideNav } from './components/SideNav';
 import { StatusRail } from './components/StatusRail';
 import { EventModal } from './components/EventModal';
 import { StartScreen } from './pages/StartScreen';
+import { PrologueFrame } from './components/PrologueFrame';
 import { OverviewPage } from './pages/OverviewPage';
 import { GovernmentPage } from './pages/GovernmentPage';
 import { ElectionsPage } from './pages/ElectionsPage';
@@ -23,6 +24,13 @@ const SPEED_MS: Record<number, number> = { 1: 1200, 4: 400, 12: 140 };
 
 export default function App() {
   const { state, page, speed, advance, toast, setToast, showStart } = useGame();
+  const [prologueDone, setPrologueDone] = useState(() => {
+    try {
+      return localStorage.getItem('weimar_prologue_seen') === '1';
+    } catch {
+      return false;
+    }
+  });
 
   useEffect(() => {
     if (!state || speed === 0 || state.pendingEvent || state.meta.ended) return;
@@ -35,6 +43,27 @@ export default function App() {
     const t = window.setTimeout(() => setToast(null), 3200);
     return () => window.clearTimeout(t);
   }, [toast, setToast]);
+
+  useEffect(() => {
+    const onShowPrologue = () => setPrologueDone(false);
+    window.addEventListener('weimar:show-prologue', onShowPrologue);
+    return () => window.removeEventListener('weimar:show-prologue', onShowPrologue);
+  }, []);
+
+  if (!prologueDone && (showStart || !state)) {
+    return (
+      <PrologueFrame
+        onDone={() => {
+          try {
+            localStorage.setItem('weimar_prologue_seen', '1');
+          } catch {
+            /* ignore */
+          }
+          setPrologueDone(true);
+        }}
+      />
+    );
+  }
 
   if (showStart || !state) return <StartScreen />;
 
